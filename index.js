@@ -1,7 +1,7 @@
 /** Describes object (circle) drawn on canvas and its attributes. */
 
 const BOOST = 30;
-const SIDEBOOST = 7;
+const SIDEBOOST = 5;
 const G = -10;
 
 const START_X = 500;
@@ -89,9 +89,9 @@ class Rocket {
           if (Math.abs(this.angle) < 0.07 && Math.abs(this.vx) < 2 && Math.abs(this.vy) < 3) {
             document.getElementById("status").innerHTML = "Smooth Landing!";
             if (p.redirect) {
-              setTimeout(function(){
+              setTimeout(function () {
                 window.location.href = p.redirect;
-              },1500);
+              }, 1500);
             }
           } else {
             document.getElementById("status").innerHTML = "You crashed!";
@@ -119,19 +119,31 @@ class Rocket {
   }
 
   reset() {
-    this.x = getRandomInt(c.width/2 - 100, c.width/2 + 100);;
+    this.x = getRandomInt(c.width / 2 - 100, c.width / 2 + 100);
+    ;
     this.y = 100;
     this.vx = 0;
     this.vy = 0;
     this.ax = 0;
     this.ay = 0;
     this.w = 0;
+    this.angle = getRandomInt(-0.1, 0.1);
+  }
+
+  start(x) {
+    this.x = x;
+    this.y = c.height - PAD_MAMSL - HEIGHT - 5;
+    this.vx = 0;
+    this.vy = -20;
+    this.ax = 0;
+    this.ay = -10;
+    this.w = 0;
     this.angle = 0;
   }
 }
 
 class Pad {
-  constructor(x, width, title='', redirect='') {
+  constructor(x, width, title = '', redirect = '') {
     this.x = x;
     this.width = width;
     this.title = title;
@@ -201,7 +213,7 @@ document.addEventListener('keyup', event => {
   }
 })
 
-const startX = getRandomInt(c.width/2 - 100, c.width/2 + 100);
+const startX = getRandomInt(c.width / 2 - 100, c.width / 2 + 100);
 rocket = new Rocket(startX, 100, 0, 0, 10);
 
 /** This function is ran with every animation frame and each time clears canvas, updates coordinates of all objects,
@@ -242,13 +254,35 @@ for (let p of pads) {
 
 document.getElementById("start").onclick = start;
 
-function start() {
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
+if (urlParams.has('start')) {
+  let startpad = null;
+  for (let p of pads) {
+    if (urlParams.get('start') === p.title) {
+      startpad = p;
+      break;
+    }
+  }
+  startFromPad(startpad);
+}
+
+function startFromPad(startpad) {
   LANDED = false;
-  rocket.reset();
+  rocket.start(startpad.x);
+
   document.getElementById("status").innerHTML = "Adi's Landing Page";
   document.getElementById('start').style.display = 'none';
   document.getElementById('intro').style.display = 'none';
   window.requestAnimationFrame(animate);
 }
 
+function start(startpad = null) {
+  LANDED = false;
+  rocket.reset();
 
+  document.getElementById("status").innerHTML = "Adi's Landing Page";
+  document.getElementById('start').style.display = 'none';
+  document.getElementById('intro').style.display = 'none';
+  window.requestAnimationFrame(animate);
+}
