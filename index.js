@@ -47,7 +47,7 @@ class Rocket {
       fy += -Math.sin(this.angle) * SIDEBOOST;
     } else {
       // this.w *= 0.99;
-      this.w += Math.sin(this.angle) * (Math.PI / 40000);
+      this.w += -Math.sin(this.angle) * (Math.PI / 40000);
     }
     this.angle += this.w;
 
