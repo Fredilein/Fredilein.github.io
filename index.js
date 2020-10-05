@@ -1,6 +1,7 @@
 /** Describes object (circle) drawn on canvas and its attributes. */
 
 const BOOST = 30;
+const SIDEBOOST = 7;
 const G = -10;
 
 const START_X = 500;
@@ -33,18 +34,25 @@ class Rocket {
   }
 
   move(dt) {
+    let fx = 0;
+    let fy = 0;
+
     if (this.boostRight) {
       this.w += Math.PI / 10000;
+      fx += Math.cos(this.angle) * SIDEBOOST;
+      fy += Math.sin(this.angle) * SIDEBOOST;
     } else if (this.boostLeft) {
       this.w -= Math.PI / 10000;
+      fx += -Math.cos(this.angle) * SIDEBOOST;
+      fy += -Math.sin(this.angle) * SIDEBOOST;
     } else {
       this.w *= 0.99;
     }
     this.angle += this.w;
 
     const b = this.isBoosting ? BOOST : 0;
-    const fx = Math.sin(this.angle) * b;
-    const fy = -Math.cos(this.angle) * b - G;
+    fx += Math.sin(this.angle) * b;
+    fy += -Math.cos(this.angle) * b - G;
     this.ax = fx / this.m;
     this.ay = fy / this.m;
 
