@@ -46,7 +46,8 @@ class Rocket {
       fx += -Math.cos(this.angle) * SIDEBOOST;
       fy += -Math.sin(this.angle) * SIDEBOOST;
     } else {
-      this.w *= 0.99;
+      // this.w *= 0.99;
+      this.w += Math.sin(this.angle) * (Math.PI / 40000);
     }
     this.angle += this.w;
 
@@ -131,7 +132,7 @@ class Rocket {
   }
 
   start(x) {
-    this.x = x;
+    this.x = x - WIDTH/2;
     this.y = c.height - PAD_MAMSL - HEIGHT - 5;
     this.vx = 0;
     this.vy = -20;
