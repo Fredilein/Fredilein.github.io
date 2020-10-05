@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<a href="./boring.html" class="boring" id="boring">I'm either on mobile, still using Internet Explorer, or can't fly a rocket.</a>
+
+<h1 class="status" id="status">Adi's Landing Page</h1>
+
+    <p class="intro" id="intro">Welcome to my landing page. Land the rocket on specific landing pads to explore the pages of this website.
+    <br> Use your arrow keys to control the rocket.</p>
+    <input class="button" id="start" type="button" value="Let's go!"/>
+
+
+<canvas id="canvas">
+</canvas>
+
+<script>
+  (function() {
+    const canvas = document.getElementById('canvas'),
+        context = canvas.getContext('2d');
+
+    // resize the canvas to fill browser window dynamically
+    window.addEventListener('resize', resizeCanvas, false);
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+  })();
+</script>
+<script type="text/javascript" src="index.js"></script>
+<style>
+    @font-face {
+        font-family: "Roboto";
+        src: url('./assets/Roboto-Regular.ttf') format("truetype");
+    }
+
+    * {  /* to remove the top and left whitespace */
+        margin: 0;
+        padding: 0;
+        font-family: Roboto;
+    }
+
+    html, body { /* just to be sure these are full screen*/
+        width: 100%;
+        height: 100%;
+    }
+
+    canvas { /* To remove the scrollbars */
+        height: 100%;
+        width: 100vw;
+        display: block;
+    }
+
+    .status {
+        position: absolute;
+        top:  50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        color: lightblue;
+        z-index: -1;
+    }
+    .intro{
+        position: absolute;
+        text-align: center;
+        top:  80px;
+        width: 100vw;
+    }
+    .button {
+        position: absolute;
+        margin-top: 130px;
+        left: 47%;
+        text-align: center;
+        height: 50px;
+        width: 100px;
+        border-radius: 10px;
+    }
+    .boring {
+        position: absolute;
+    }
+
+
+</style>
+</body>
+</html>
