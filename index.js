@@ -46,8 +46,13 @@ class Rocket {
       fx += -Math.cos(this.angle) * SIDEBOOST;
       fy += -Math.sin(this.angle) * SIDEBOOST;
     } else {
-      // this.w *= 0.99;
-      this.w += -Math.sin(this.angle) * (Math.PI / 40000);
+      // not sure about this. Which side does it tip? does it depend on boost? Physics man...
+      if (this.isBoosting) {
+        this.w += Math.sin(this.angle) * (Math.PI / 50000);
+      } else {
+        this.w += -Math.sin(this.angle) * (Math.PI / 50000);
+      }
+
     }
     this.angle += this.w;
 
