@@ -1,7 +1,7 @@
 /** Describes object (circle) drawn on canvas and its attributes. */
 
 const BOOST = 30;
-const SIDEBOOST = 12;
+const SIDEBOOST = 7;
 const G = -10;
 
 const START_X = 500;
