@@ -299,7 +299,7 @@ function is_touch_device() {
 }
 
 if (is_touch_device()) {
-  PAD_MAMSL = 400;
+  PAD_MAMSL = 500;
   drawWater();
   document.getElementById('body').style.fontSize = '1.5em';
   for (let p of pads) {
