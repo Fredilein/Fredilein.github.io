@@ -93,7 +93,7 @@ class Rocket {
           console.log(`angle: ${this.angle}`);
           console.log(`horizontal velocity: ${this.vx}`);
           console.log(`vertical velocity: ${this.vy}`);
-          if (Math.abs(this.angle) < 0.07 && Math.abs(this.vx) < 2 && Math.abs(this.vy) < 3) {
+          if (Math.abs(this.angle) < 0.09 && Math.abs(this.vx) < 2.5 && Math.abs(this.vy) < 3.5) {
             document.getElementById("status").innerHTML = "Smooth Landing!";
             if (p.redirect) {
               setTimeout(function () {
@@ -320,22 +320,28 @@ document.oncontextmenu = new Function("return false;");
 const upBtn = document.getElementById("boost-up");
 const leftBtn = document.getElementById("boost-left");
 const rightBtn = document.getElementById("boost-right");
-upBtn.addEventListener("touchstart", function(){
+upBtn.addEventListener("touchstart", e => {
+  e.preventDefault();
   rocket.isBoosting = true;
 });
-upBtn.addEventListener("touchend", function() {
+upBtn.addEventListener("touchend", e => {
+  e.preventDefault();
   rocket.isBoosting = false;
 });
-leftBtn.addEventListener("touchstart", function(){
+leftBtn.addEventListener("touchstart", e => {
+  e.preventDefault();
   rocket.boostLeft = true;
 });
-leftBtn.addEventListener("touchend", function() {
+leftBtn.addEventListener("touchend", e => {
+  e.preventDefault();
   rocket.boostLeft = false;
 });
-rightBtn.addEventListener("touchstart", function(){
+rightBtn.addEventListener("touchstart", e => {
+  e.preventDefault();
   rocket.boostRight = true;
 });
-rightBtn.addEventListener("touchend", function() {
+rightBtn.addEventListener("touchend", e => {
+  e.preventDefault();
   rocket.boostRight = false;
 });
 
