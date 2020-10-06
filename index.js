@@ -1,8 +1,8 @@
 /** Describes object (circle) drawn on canvas and its attributes. */
 
-const BOOST = 30;
+const BOOST = 22;
 const SIDEBOOST = 5;
-const G = -10;
+const G = -8;
 
 const START_X = 500;
 const START_Y = 200;
@@ -38,23 +38,24 @@ class Rocket {
     let fy = 0;
 
     if (this.boostRight) {
-      this.w += Math.PI / 10000;
+      this.w += Math.PI / 20000;
       fx += Math.cos(this.angle) * SIDEBOOST;
       fy += Math.sin(this.angle) * SIDEBOOST;
     } else if (this.boostLeft) {
-      this.w -= Math.PI / 10000;
+      this.w -= Math.PI / 20000;
       fx += -Math.cos(this.angle) * SIDEBOOST;
       fy += -Math.sin(this.angle) * SIDEBOOST;
     } else {
       // not sure about this. Which side does it tip? does it depend on boost? Physics man...
       if (this.isBoosting) {
-        this.w += Math.sin(this.angle) * (Math.PI / 50000);
+        this.w += Math.sin(this.angle) * (Math.PI / 100000);
       } else {
-        this.w += -Math.sin(this.angle) * (Math.PI / 50000);
+        this.w += -Math.sin(this.angle) * (Math.PI / 80000);
       }
 
     }
     this.angle += this.w;
+    this.angle = (this.angle + this.w) % (2 * Math.PI);
 
     const b = this.isBoosting ? BOOST : 0;
     fx += Math.sin(this.angle) * b;
@@ -119,8 +120,12 @@ class Rocket {
   }
 
   resolveEdgeCollision() {
-    if (this.x > c.width || this.x < 0 || this.y < 0) {
+    if (this.y < 0) {
       this.reset();
+    } else if (this.x > c.width) {
+      this.x = 5;
+    } else if (this.x < 0) {
+      this.x = c.width - 5;
     }
   }
 
