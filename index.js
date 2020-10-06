@@ -11,9 +11,9 @@ const START_Y = 200;
 const WIDTH = 20;
 const HEIGHT = 60;
 
-const PAD_WIDTH = 100;
-const PAD_HEIGHT = 20;
-const PAD_MAMSL = 140;   // Meter above mean sea level
+let PAD_WIDTH = 100;
+let PAD_HEIGHT = 20;
+let PAD_MAMSL = 140;   // Meter above mean sea level
 
 let LANDED = false;
 
@@ -48,9 +48,9 @@ class Rocket {
     } else {
       // not sure about this. Which side does it tip? does it depend on boost? Physics man...
       if (this.isBoosting) {
-        this.w += Math.sin(this.angle) * (Math.PI / 100000);
+        this.w += Math.sin(this.angle) * (Math.PI / 120000);
       } else {
-        this.w += -Math.sin(this.angle) * (Math.PI / 80000);
+        this.w += -Math.sin(this.angle) * (Math.PI / 100000);
       }
 
     }
@@ -171,7 +171,7 @@ class Pad {
     ctx.font = "30px Arial";
     // ctx.fillStyle = "black";
     ctx.textAlign = "center";
-    ctx.fillText(this.title, 0, PAD_MAMSL / 2);
+    ctx.fillText(this.title, 0, 100);
     ctx.restore();
   }
 
@@ -298,3 +298,49 @@ function start(startpad = null) {
   document.getElementById('intro').style.display = 'none';
   window.requestAnimationFrame(animate);
 }
+
+
+
+// Experimental for touch devices
+
+function is_touch_device() {
+  return ( 'ontouchstart' in window ) ||
+      ( navigator.maxTouchPoints > 0 ) ||
+      ( navigator.msMaxTouchPoints > 0 );
+}
+
+if (is_touch_device()) {
+  PAD_MAMSL = 400;
+  drawWater();
+  for (let p of pads) {
+    p.drawPad();
+  }
+} else {
+  document.getElementById('touch-buttons').style.display = 'none';
+}
+
+document.addEventListener('contextmenu', event => event.preventDefault());
+
+const upBtn = document.getElementById("boost-up");
+const leftBtn = document.getElementById("boost-left");
+const rightBtn = document.getElementById("boost-right");
+upBtn.addEventListener("touchstart", function(){
+  rocket.isBoosting = true;
+});
+upBtn.addEventListener("touchend", function() {
+  rocket.isBoosting = false;
+});
+leftBtn.addEventListener("touchstart", function(){
+  rocket.boostLeft = true;
+});
+leftBtn.addEventListener("touchend", function() {
+  rocket.boostLeft = false;
+});
+rightBtn.addEventListener("touchstart", function(){
+  rocket.boostRight = true;
+});
+rightBtn.addEventListener("touchend", function() {
+  rocket.boostRight = false;
+});
+
+console.log(is_touch_device());
