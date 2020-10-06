@@ -266,18 +266,7 @@ for (let p of pads) {
 
 document.getElementById("start").onclick = start;
 
-const queryString = window.location.search;
-const urlParams = new URLSearchParams(queryString);
-if (urlParams.has('start')) {
-  let startpad = null;
-  for (let p of pads) {
-    if (urlParams.get('start') === p.title) {
-      startpad = p;
-      break;
-    }
-  }
-  startFromPad(startpad);
-}
+
 
 function startFromPad(startpad) {
   LANDED = false;
@@ -312,6 +301,7 @@ function is_touch_device() {
 if (is_touch_device()) {
   PAD_MAMSL = 400;
   drawWater();
+  document.getElementById('body').style.fontSize = '1.5em';
   for (let p of pads) {
     p.drawPad();
   }
@@ -320,6 +310,10 @@ if (is_touch_device()) {
 }
 
 document.addEventListener('contextmenu', event => event.preventDefault());
+document.addEventListener('select', event => event.preventDefault());
+document.addEventListener('copy', event => event.preventDefault());
+document.addEventListener('cut', event => event.preventDefault());
+document.addEventListener('selectstart', event => event.preventDefault());
 
 const upBtn = document.getElementById("boost-up");
 const leftBtn = document.getElementById("boost-left");
@@ -344,3 +338,20 @@ rightBtn.addEventListener("touchend", function() {
 });
 
 console.log(is_touch_device());
+
+
+
+
+
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
+if (urlParams.has('start')) {
+  let startpad = null;
+  for (let p of pads) {
+    if (urlParams.get('start') === p.title) {
+      startpad = p;
+      break;
+    }
+  }
+  startFromPad(startpad);
+}
