@@ -12,7 +12,7 @@ const WIDTH = 20;
 const HEIGHT = 60;
 
 const PAD_WIDTH = 100;
-const PAD_HEIGHT = 10;
+const PAD_HEIGHT = 20;
 const PAD_MAMSL = 140;   // Meter above mean sea level
 
 let LANDED = false;
@@ -78,7 +78,7 @@ class Rocket {
     ctx.rotate(this.angle);
     ctx.rect(-WIDTH / 2, -HEIGHT / 2, WIDTH, HEIGHT);
     // ctx.translate(-(this.x + 10), -(this.y + 30));
-    ctx.fillStyle = this.isBoosting ? "red" : "black";
+    ctx.fillStyle = this.isBoosting ? "orange" : "white";
     ctx.fill();
     ctx.restore();
   }
@@ -164,11 +164,12 @@ class Pad {
   drawPad() {
     ctx.save();
     ctx.beginPath();
+    ctx.fillStyle = "black";
     ctx.translate(this.x, c.height - PAD_MAMSL);
     ctx.rect(-this.width / 2, 0, this.width, PAD_HEIGHT);
     ctx.fill();
     ctx.font = "30px Arial";
-    ctx.fillStyle = "black";
+    // ctx.fillStyle = "black";
     ctx.textAlign = "center";
     ctx.fillText(this.title, 0, PAD_MAMSL / 2);
     ctx.restore();
@@ -247,7 +248,7 @@ function drawWater() {
   ctx.save();
   ctx.beginPath();
   ctx.rect(0, c.height - PAD_MAMSL, c.width, PAD_MAMSL);
-  ctx.fillStyle = "aqua";
+  ctx.fillStyle = "lightgrey";
   ctx.fill();
   ctx.restore();
 }
