@@ -1,8 +1,8 @@
 /** Describes object (circle) drawn on canvas and its attributes. */
 
-const BOOST = 22;
-const SIDEBOOST = 5;
-const G = -8;
+let BOOST = 22;
+let SIDEBOOST = 5;
+let G = -8;
 
 const START_X = 500;
 const START_Y = 200;
@@ -89,13 +89,13 @@ class Rocket {
     if (this.y + this.height >= c.height - PAD_MAMSL) {
       let contact = false;
       for (let p of pads) {
-        if (p.checkAbove(this.x)) {
+        if (p.checkAbove(this.x + this.width/2)) {
           contact = true;
           // contact with pad
           console.log(`angle: ${this.angle}`);
           console.log(`horizontal velocity: ${this.vx}`);
           console.log(`vertical velocity: ${this.vy}`);
-          if (Math.abs(this.angle) < 0.09 && Math.abs(this.vx) < 2.5 && Math.abs(this.vy) < 3.5) {
+          if (checkSmoothLanding(this.angle, this.vx, this.vy)) {
             document.getElementById("status").innerHTML = "Smooth Landing!";
             if (p.redirect) {
               setTimeout(function () {
@@ -182,6 +182,23 @@ class Pad {
       return true;
     }
     return false;
+  }
+}
+
+
+function checkSmoothLanding(a, vx, vy) {
+  if (is_touch_device()){
+    if (Math.abs(a) < 0.22 && Math.abs(vx) < 6 && Math.abs(vy) < 7) {
+      return true;
+    } else {
+      return false;
+    }
+  } else {
+    if (Math.abs(a) < 0.09 && Math.abs(vx) < 2.5 && Math.abs(vy) < 3.5) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }
 
@@ -302,8 +319,11 @@ let pads = [];
 
 if (is_touch_device()) {
   PAD_MAMSL = 500;
+  BOOST = 40;
+  SIDEBOOST = 10;
+  G = -12;
   drawWater();
-  document.getElementById('body').style.fontSize = '1.5em';
+  document.getElementById('body').style.fontSize = '2em';
   rocket = new Rocket(startX, 100, 0, 0, 10, 0, 0, 40, 120);
   pads.push(new Pad(c.width / 2, 240, 'Projects', './projects.html'));
   pads.push(new Pad(c.width / 5, 160, 'About', './about.html'));
