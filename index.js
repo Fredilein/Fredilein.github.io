@@ -309,11 +309,13 @@ if (is_touch_device()) {
   document.getElementById('touch-buttons').style.display = 'none';
 }
 
+// Prevent mobile touch stuff...
 document.addEventListener('contextmenu', event => event.preventDefault());
 document.addEventListener('select', event => event.preventDefault());
 document.addEventListener('copy', event => event.preventDefault());
 document.addEventListener('cut', event => event.preventDefault());
 document.addEventListener('selectstart', event => event.preventDefault());
+document.oncontextmenu = new Function("return false;");
 
 const upBtn = document.getElementById("boost-up");
 const leftBtn = document.getElementById("boost-left");
