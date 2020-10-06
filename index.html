@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Adi | Fly</title>
     <meta name="viewport" content="width=device-width, initial-scale=0.3, maximum-scale=0.3, user-scalable=no" />
+    <script src="https://kit.fontawesome.com/c73d10dab7.js" crossorigin="anonymous"></script>
 </head>
 <body id="body">
 <a href="./boring.html" class="boring" id="boring">I'm either boring, still using Internet Explorer, or can't fly a rocket.</a>
@@ -18,9 +19,9 @@
 </canvas>
 
 <div class="touch-buttons" id="touch-buttons">
-    <input class="button touch-button touch-button-m" id="boost-up" type="button" value="Up"/>
-    <input class="button touch-button touch-button-l" id="boost-left" type="button" value="Left"/>
-    <input class="button touch-button touch-button-r" id="boost-right" type="button" value="Right"/>
+    <input class="button touch-button touch-button-m" id="boost-up" type="button" value="^"/>
+    <input class="button touch-button touch-button-l" id="boost-left" type="button" value="<-"/>
+    <input class="button touch-button touch-button-r" id="boost-right" type="button" value="->"/>
 </div>
 
 <script>
@@ -89,6 +90,7 @@
         margin-left: 30%;
         margin-right: 30$;
         border-radius: 10px;
+        font-size: 1.5em;
     }
     .boring {
         position: absolute;
@@ -112,6 +114,7 @@
         height: 300px;
         margin: 10px;
         border-radius: 40px;
+        font-size: 4em;
     }
     .touch-button-l {
         left: 10%;

@@ -147,9 +147,9 @@ class Rocket {
     this.x = x - this.width/2;
     this.y = c.height - PAD_MAMSL - this.height - 5;
     this.vx = 0;
-    this.vy = -20;
+    this.vy = is_touch_device() ? -40 : -20;
     this.ax = 0;
-    this.ay = -10;
+    this.ay = is_touch_device() ? -20 : -10;
     this.w = 0;
     this.angle = 0;
   }
@@ -319,11 +319,12 @@ let pads = [];
 
 if (is_touch_device()) {
   PAD_MAMSL = 500;
-  BOOST = 40;
+  BOOST = 44;
   SIDEBOOST = 10;
-  G = -12;
+  G = -16;
   drawWater();
   document.getElementById('body').style.fontSize = '2em';
+  document.getElementById('start').style.height = '160px';
   rocket = new Rocket(startX, 100, 0, 0, 10, 0, 0, 40, 120);
   pads.push(new Pad(c.width / 2, 240, 'Projects', './projects.html'));
   pads.push(new Pad(c.width / 5, 160, 'About', './about.html'));
