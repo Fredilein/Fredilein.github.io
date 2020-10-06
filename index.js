@@ -18,7 +18,7 @@ let PAD_MAMSL = 140;   // Meter above mean sea level
 let LANDED = false;
 
 class Rocket {
-  constructor(x, y, ax, ay, m, vx = 0, vy = 0) {
+  constructor(x, y, ax, ay, m, vx = 0, vy = 0, width= WIDTH, height= HEIGHT) {
     this.x = x;
     this.y = y;
     this.ax = ax;
@@ -27,6 +27,8 @@ class Rocket {
     this.vx = vx;
     this.vy = vy;
     this.w = 0;
+    this.width = width;
+    this.height = height;
     this.isBoosting = false;
     this.boostLeft = false;
     this.boostRight = false;
@@ -74,9 +76,9 @@ class Rocket {
     //draw a circle
     ctx.save();
     ctx.beginPath();
-    ctx.translate(this.x + WIDTH / 2, this.y + HEIGHT / 2);
+    ctx.translate(this.x + this.width / 2, this.y + this.height / 2);
     ctx.rotate(this.angle);
-    ctx.rect(-WIDTH / 2, -HEIGHT / 2, WIDTH, HEIGHT);
+    ctx.rect(-this.width / 2, -this.height / 2, this.width, this.height);
     // ctx.translate(-(this.x + 10), -(this.y + 30));
     ctx.fillStyle = this.isBoosting ? "orange" : "white";
     ctx.fill();
@@ -84,7 +86,7 @@ class Rocket {
   }
 
   landingDetection() {
-    if (this.y + HEIGHT >= c.height - PAD_MAMSL) {
+    if (this.y + this.height >= c.height - PAD_MAMSL) {
       let contact = false;
       for (let p of pads) {
         if (p.checkAbove(this.x)) {
@@ -142,8 +144,8 @@ class Rocket {
   }
 
   start(x) {
-    this.x = x - WIDTH/2;
-    this.y = c.height - PAD_MAMSL - HEIGHT - 5;
+    this.x = x - this.width/2;
+    this.y = c.height - PAD_MAMSL - this.height - 5;
     this.vx = 0;
     this.vy = -20;
     this.ax = 0;
@@ -225,8 +227,7 @@ document.addEventListener('keyup', event => {
   }
 })
 
-const startX = getRandomInt(c.width / 2 - 100, c.width / 2 + 100);
-rocket = new Rocket(startX, 100, 0, 0, 10);
+
 
 /** This function is ran with every animation frame and each time clears canvas, updates coordinates of all objects,
  * resolves collisions of objects and edges of canvas , resolves collisions between objects and finally draws all of them. */
@@ -255,14 +256,7 @@ function drawWater() {
 
 drawWater();
 
-let pads = [];
-pads.push(new Pad(c.width / 2, 140, 'Projects', './projects.html'));
-pads.push(new Pad(c.width / 4, 80, 'About', './about.html'));
-pads.push(new Pad(c.width / 4 * 3, 100, 'Contact', './contact.html'));
 
-for (let p of pads) {
-  p.drawPad();
-}
 
 document.getElementById("start").onclick = start;
 
@@ -298,15 +292,32 @@ function is_touch_device() {
       ( navigator.msMaxTouchPoints > 0 );
 }
 
+const startX = getRandomInt(c.width / 2 - 100, c.width / 2 + 100);
+
+
+let pads = [];
+
+
+
+
 if (is_touch_device()) {
   PAD_MAMSL = 500;
   drawWater();
   document.getElementById('body').style.fontSize = '1.5em';
-  for (let p of pads) {
-    p.drawPad();
-  }
+  rocket = new Rocket(startX, 100, 0, 0, 10, 0, 0, 40, 120);
+  pads.push(new Pad(c.width / 2, 240, 'Projects', './projects.html'));
+  pads.push(new Pad(c.width / 5, 160, 'About', './about.html'));
+  pads.push(new Pad(c.width / 5 * 4, 190, 'Contact', './contact.html'));
 } else {
   document.getElementById('touch-buttons').style.display = 'none';
+  rocket = new Rocket(startX, 100, 0, 0, 10, 0, 0, 20, 60);
+  pads.push(new Pad(c.width / 2, 140, 'Projects', './projects.html'));
+  pads.push(new Pad(c.width / 4, 90, 'About', './about.html'));
+  pads.push(new Pad(c.width / 4 * 3, 100, 'Contact', './contact.html'));
+}
+
+for (let p of pads) {
+  p.drawPad();
 }
 
 // Prevent mobile touch stuff...
