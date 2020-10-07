@@ -78,8 +78,13 @@ class Rocket {
     ctx.beginPath();
     ctx.translate(this.x + this.width / 2, this.y + this.height / 2);
     ctx.rotate(this.angle);
-    ctx.rect(-this.width / 2, -this.height / 2, this.width, this.height);
-    // ctx.translate(-(this.x + 10), -(this.y + 30));
+    // ctx.rect(-this.width / 2, -this.height / 2, this.width, this.height);
+    if (this.isBoosting) {
+      ctx.drawImage(rocketImageBoosting, -this.width/2, -this.height/2);
+    } else {
+      ctx.drawImage(rocketImage, -this.width/2, -this.height/2);
+    }
+
     ctx.fillStyle = this.isBoosting ? "orange" : "white";
     ctx.fill();
     ctx.restore();
@@ -209,6 +214,8 @@ function getRandomInt(min, max) {
 
 const c = document.getElementById("canvas");
 const ctx = c.getContext("2d");
+const rocketImage = document.getElementById('rocket-image');
+const rocketImageBoosting = document.getElementById('rocket-image-boosting');
 
 
 document.addEventListener('keydown', event => {
@@ -255,6 +262,13 @@ function animate() {
   rocket.resolveEdgeCollision();
   rocket.landingDetection();
   rocket.draw();
+
+  // performance test
+  drawWater();
+  for (let p of pads) {
+    p.drawPad();
+  }
+
 
   // drawLandingPads();
   if (!LANDED) {
@@ -331,7 +345,8 @@ if (is_touch_device()) {
   pads.push(new Pad(c.width / 5 * 4, 190, 'Contact', './contact.html'));
 } else {
   document.getElementById('touch-buttons').style.display = 'none';
-  rocket = new Rocket(startX, 100, 0, 0, 10, 0, 0, 20, 60);
+  // rocket = new Rocket(startX, 100, 0, 0, 10, 0, 0, 20, 60);
+  rocket = new Rocket(startX, 100, 0, 0, 10, 0, 0, 90, 88);
   pads.push(new Pad(c.width / 2, 140, 'Projects', './projects.html'));
   pads.push(new Pad(c.width / 4, 90, 'About', './about.html'));
   pads.push(new Pad(c.width / 4 * 3, 100, 'Contact', './contact.html'));
