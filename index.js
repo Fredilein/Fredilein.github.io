@@ -219,34 +219,26 @@ const rocketImageBoosting = document.getElementById('rocket-image-boosting');
 
 
 document.addEventListener('keydown', event => {
-  if (event.code === 'ArrowUp') {
+  console.log(event.code);
+  if (event.code === 'ArrowUp' || event.code === 'KeyW') {
     rocket.isBoosting = true;
   }
-})
-document.addEventListener('keyup', event => {
-  if (event.code === 'ArrowUp') {
-    rocket.isBoosting = false;
-  }
-})
-
-document.addEventListener('keydown', event => {
-  if (event.code === 'ArrowLeft') {
+  if (event.code === 'ArrowLeft' || event.code === 'KeyA') {
     rocket.boostLeft = true;
   }
-})
-document.addEventListener('keyup', event => {
-  if (event.code === 'ArrowLeft') {
-    rocket.boostLeft = false;
-  }
-})
-
-document.addEventListener('keydown', event => {
-  if (event.code === 'ArrowRight') {
+  if (event.code === 'ArrowRight' || event.code === 'KeyD') {
     rocket.boostRight = true;
   }
 })
 document.addEventListener('keyup', event => {
-  if (event.code === 'ArrowRight') {
+  console.log(event.code);
+  if (event.code === 'ArrowUp' || event.code === 'KeyW') {
+    rocket.isBoosting = false;
+  }
+  if (event.code === 'ArrowLeft' || event.code === 'KeyA') {
+    rocket.boostLeft = false;
+  }
+  if (event.code === 'ArrowRight' || event.code === 'KeyD') {
     rocket.boostRight = false;
   }
 })
@@ -280,7 +272,7 @@ function drawWater() {
   ctx.save();
   ctx.beginPath();
   ctx.rect(0, c.height - PAD_MAMSL, c.width, PAD_MAMSL);
-  ctx.fillStyle = "lightgrey";
+  ctx.fillStyle = "#D4F1F4";
   ctx.fill();
   ctx.restore();
 }
