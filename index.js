@@ -285,19 +285,14 @@ document.getElementById("start").onclick = start;
 
 
 
-function startFromPad(startpad) {
-  LANDED = false;
-  rocket.start(startpad.x);
-
-  document.getElementById("status").innerHTML = "Adi's Landing Page";
-  document.getElementById('start').style.display = 'none';
-  document.getElementById('intro').style.display = 'none';
-  window.requestAnimationFrame(animate);
-}
 
 function start(startpad = null) {
   LANDED = false;
-  rocket.reset();
+  if (startpad) {
+    rocket.start(startpad.x)
+  } else {
+    rocket.reset();
+  }
 
   document.getElementById("status").innerHTML = "Adi's Landing Page";
   document.getElementById('start').style.display = 'none';
@@ -324,7 +319,7 @@ let pads = [];
 
 
 if (is_touch_device()) {
-  PAD_MAMSL = 500;
+  PAD_MAMSL = 400;
   BOOST = 44;
   SIDEBOOST = 10;
   G = -16;
@@ -400,5 +395,5 @@ if (urlParams.has('start')) {
       break;
     }
   }
-  startFromPad(startpad);
+  start(startpad);
 }
